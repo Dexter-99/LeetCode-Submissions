@@ -12,17 +12,22 @@
 class Solution
 {
 public:
-  bool solve(TreeNode *root, int par)
+  bool solve(TreeNode *root, long long _min, long _max)
   {
     if (root == NULL)
       return true;
+    else if (root->val <= _min || root->val >= _max)
+    {
 
-    if (par == -1)
-      return solve(root->left, root->val) && solve(root->right, root->val);
-    return (root->val == par) && solve(root->left, root->val) && solve(root->right, root->val);
+      return false;
+    }
+    return solve(root->left, _min, root->val) && solve(root->right, root->val, _max);
   }
-  bool isUnivalTree(TreeNode *root)
+  bool isValidBST(TreeNode *root)
   {
-    return solve(root, -1);
+
+    long long _min = INT64_MIN;
+    long long _max = INT64_MAX;
+    return solve(root, _min, _max);
   }
 };

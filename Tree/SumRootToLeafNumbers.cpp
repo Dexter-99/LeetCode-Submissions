@@ -12,17 +12,25 @@
 class Solution
 {
 public:
-  bool solve(TreeNode *root, int par)
+  void solve(TreeNode *root, int &sum, int curr)
   {
+    // cout<<curr<<endl;
     if (root == NULL)
-      return true;
+      return;
+    curr = curr * 10 + root->val;
+    if (root->left == NULL && root->right == NULL)
+    {
+      sum += curr;
+      return;
+    }
 
-    if (par == -1)
-      return solve(root->left, root->val) && solve(root->right, root->val);
-    return (root->val == par) && solve(root->left, root->val) && solve(root->right, root->val);
+    solve(root->left, sum, curr);
+    solve(root->right, sum, curr);
   }
-  bool isUnivalTree(TreeNode *root)
+  int sumNumbers(TreeNode *root)
   {
-    return solve(root, -1);
+    int sum = 0;
+    solve(root, sum, 0);
+    return sum;
   }
 };

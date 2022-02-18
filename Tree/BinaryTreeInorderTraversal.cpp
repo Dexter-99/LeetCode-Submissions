@@ -12,20 +12,28 @@
 class Solution
 {
 public:
-  void solve(TreeNode *root, vector<int> &list, int level)
+  vector<int> inorderTraversal(TreeNode *root)
   {
-    if (root == NULL)
-      return;
+    //Iterative approach Using Stack
 
-    if (level == list.size())
-      list.push_back(root->val);
-    solve(root->right, list, level + 1);
-    solve(root->left, list, level + 1);
-  }
-  vector<int> rightSideView(TreeNode *root)
-  {
+    TreeNode *curr = root;
+    stack<TreeNode *> st;
     vector<int> list;
-    solve(root, list, 0);
+    while (curr != NULL || !st.empty())
+    {
+      if (curr != NULL)
+      {
+        st.push(curr);
+        curr = curr->left;
+      }
+      else
+      {
+        curr = st.top();
+        list.push_back(curr->val);
+        st.pop();
+        curr = curr->right;
+      }
+    }
     return list;
   }
 };

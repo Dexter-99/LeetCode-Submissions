@@ -12,17 +12,27 @@
 class Solution
 {
 public:
-  bool solve(TreeNode *root, int par)
+  void solve(TreeNode *root)
   {
     if (root == NULL)
-      return true;
+      return;
 
-    if (par == -1)
-      return solve(root->left, root->val) && solve(root->right, root->val);
-    return (root->val == par) && solve(root->left, root->val) && solve(root->right, root->val);
+    TreeNode *left = root->left;
+    TreeNode *right = root->right;
+    root->left = NULL;
+
+    solve(left);
+    solve(right);
+    root->right = left;
+    TreeNode *curr = root;
+    while (curr->right)
+    {
+      curr = curr->right;
+    }
+    curr->right = right;
   }
-  bool isUnivalTree(TreeNode *root)
+  void flatten(TreeNode *root)
   {
-    return solve(root, -1);
+    solve(root);
   }
 };

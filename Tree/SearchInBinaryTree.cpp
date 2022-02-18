@@ -12,17 +12,16 @@
 class Solution
 {
 public:
-  bool solve(TreeNode *root, int par)
+  TreeNode *searchBST(TreeNode *root, int val)
   {
     if (root == NULL)
-      return true;
-
-    if (par == -1)
-      return solve(root->left, root->val) && solve(root->right, root->val);
-    return (root->val == par) && solve(root->left, root->val) && solve(root->right, root->val);
+      return NULL;
+    if (root->val == val)
+      return root;
+    else if (root->val > val)
+    {
+      return searchBST(root->left, val);
+    }
+    return searchBST(root->right, val);
   }
-  bool isUnivalTree(TreeNode *root)
-  {
-    return solve(root, -1);
-  }
-};
+};C

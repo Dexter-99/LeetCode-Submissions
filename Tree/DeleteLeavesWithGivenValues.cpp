@@ -12,17 +12,23 @@
 class Solution
 {
 public:
-  bool solve(TreeNode *root, int par)
+  TreeNode *solve(TreeNode *root, int target)
   {
     if (root == NULL)
-      return true;
+    {
+      return NULL;
+    }
 
-    if (par == -1)
-      return solve(root->left, root->val) && solve(root->right, root->val);
-    return (root->val == par) && solve(root->left, root->val) && solve(root->right, root->val);
+    root->left = solve(root->left, target);
+    root->right = solve(root->right, target);
+
+    if (!root->left && !root->right && root->val == target)
+      return NULL;
+    return root;
   }
-  bool isUnivalTree(TreeNode *root)
+  TreeNode *removeLeafNodes(TreeNode *root, int target)
   {
-    return solve(root, -1);
+    return solve(root, target);
+    // return root;
   }
 };

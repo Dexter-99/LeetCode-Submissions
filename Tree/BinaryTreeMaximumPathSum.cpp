@@ -12,17 +12,21 @@
 class Solution
 {
 public:
-  bool solve(TreeNode *root, int par)
+  int solve(TreeNode *root, int &ans)
   {
     if (root == NULL)
-      return true;
+      return 0;
 
-    if (par == -1)
-      return solve(root->left, root->val) && solve(root->right, root->val);
-    return (root->val == par) && solve(root->left, root->val) && solve(root->right, root->val);
+    int l = solve(root->left, ans);
+    int r = solve(root->right, ans);
+    int temp = max(root->val, root->val + max(l, r));
+    ans = max(ans, root->val + l + r);
+    return temp;
   }
-  bool isUnivalTree(TreeNode *root)
+  int maxPathSum(TreeNode *root)
   {
-    return solve(root, -1);
+    int ans = INT32_MIN;
+    solve(root, ans);
+    return ans;
   }
 };

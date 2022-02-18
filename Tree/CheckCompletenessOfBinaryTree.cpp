@@ -12,17 +12,25 @@
 class Solution
 {
 public:
-  bool solve(TreeNode *root, int par)
+  bool isCompleteTree(TreeNode *root)
   {
-    if (root == NULL)
-      return true;
-
-    if (par == -1)
-      return solve(root->left, root->val) && solve(root->right, root->val);
-    return (root->val == par) && solve(root->left, root->val) && solve(root->right, root->val);
-  }
-  bool isUnivalTree(TreeNode *root)
-  {
-    return solve(root, -1);
+    queue<TreeNode *> q;
+    q.push(root);
+    bool flag = false;
+    while (!q.empty())
+    {
+      TreeNode *curr = q.front();
+      q.pop();
+      if (!curr)
+        flag = true;
+      else
+      {
+        if (flag)
+          return false;
+        q.push(curr->left);
+        q.push(curr->right);
+      }
+    }
+    return true;
   }
 };

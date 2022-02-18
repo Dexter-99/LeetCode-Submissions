@@ -12,17 +12,25 @@
 class Solution
 {
 public:
-  bool solve(TreeNode *root, int par)
+  void solve(TreeNode *root, int k, int &i, int &ans)
   {
     if (root == NULL)
-      return true;
-
-    if (par == -1)
-      return solve(root->left, root->val) && solve(root->right, root->val);
-    return (root->val == par) && solve(root->left, root->val) && solve(root->right, root->val);
+      return;
+    solve(root->left, k, i, ans);
+    if (i == k)
+    {
+      ans = root->val;
+      i++;
+      return;
+    }
+    i++;
+    solve(root->right, k, i, ans);
   }
-  bool isUnivalTree(TreeNode *root)
+  int kthSmallest(TreeNode *root, int k)
   {
-    return solve(root, -1);
+    int ans = -1;
+    int i = 1;
+    solve(root, k, i, ans);
+    return ans;
   }
 };

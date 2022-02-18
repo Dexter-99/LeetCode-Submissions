@@ -12,17 +12,27 @@
 class Solution
 {
 public:
-  bool solve(TreeNode *root, int par)
+  vector<int> preorderTraversal(TreeNode *root)
   {
+    vector<int> list;
     if (root == NULL)
-      return true;
-
-    if (par == -1)
-      return solve(root->left, root->val) && solve(root->right, root->val);
-    return (root->val == par) && solve(root->left, root->val) && solve(root->right, root->val);
-  }
-  bool isUnivalTree(TreeNode *root)
-  {
-    return solve(root, -1);
+      return list;
+    stack<TreeNode *> st;
+    st.push(root);
+    while (!st.empty())
+    {
+      TreeNode *curr = st.top();
+      st.pop();
+      list.push_back(curr->val);
+      if (curr->right)
+      {
+        st.push(curr->right);
+      }
+      if (curr->left)
+      {
+        st.push(curr->left);
+      }
+    }
+    return list;
   }
 };

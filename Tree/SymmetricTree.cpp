@@ -12,17 +12,17 @@
 class Solution
 {
 public:
-  bool solve(TreeNode *root, int par)
+  bool isSame(TreeNode *root1, TreeNode *root2)
   {
-    if (root == NULL)
+    if (root1 == NULL && root2 == NULL)
       return true;
-
-    if (par == -1)
-      return solve(root->left, root->val) && solve(root->right, root->val);
-    return (root->val == par) && solve(root->left, root->val) && solve(root->right, root->val);
+    if (root1 == NULL || root2 == NULL)
+      return false;
+    return (root1->val == root2->val && isSame(root1->left, root2->right) && isSame(root1->right, root2->left));
   }
-  bool isUnivalTree(TreeNode *root)
+  bool isSymmetric(TreeNode *root)
   {
-    return solve(root, -1);
+
+    return isSame(root, root);
   }
 };
